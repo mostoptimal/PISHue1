@@ -4,7 +4,7 @@ package pis.hue1;
 import java.util.ArrayList;
 
 public class Wuerfel implements Codec{
-    ArrayList<WordObject> wordserie= new ArrayList<>();
+
 
     private String schluessel;
 
@@ -20,13 +20,6 @@ public class Wuerfel implements Codec{
         return "";
     }
 
-
-
-    public void turnTextToSmallObjects(String text){
-        for(int i=0; i< text.length(); i++){
-
-        }
-    }
 
     /**Setter und Getter*/
     public String gibLosung() {
