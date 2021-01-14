@@ -5,32 +5,33 @@ import java.util.Collections;
 
 public class Main {
     private static ArrayList<WordObject> wordsList= new ArrayList<>();
-    String mainText;
-     String losung;
     /*********************************/
     public static void main(String[] args) {
         String myText;
-        String keyString;
+        String losung;
 
 
         //Codec codec1= new Wuerfel("","");
         //Codec codec2=new Caesar();
         myText="i am here texting my terminal";
-        keyString="SCHWARZWALD";
-        System.out.println(keyString);
-        System.out.println(sortTextAlphabet(keyString));
-        System.out.println(creatWordObjectArrayList(myText,keyString));
+        losung="SCHWARZWALD";
+        System.out.println(losung);
+        System.out.println(sortTextAlphabet(losung));
+        creatWordObjectArrayList(myText,losung);
 
-    }
-    public static ArrayList<WordObject> creatWordObjectArrayList(String text,String losung){
-        for (int i=0; i<losung.length(); i++){
-            wordsList.add(new WordObject(text.charAt(i),
-                    i,
-                    text,
-                    losung)
-            );
+        for (int i=0; i<losung.length();i++){
+            System.out.print(wordsList.get(i).getCh());
         }
-        return wordsList;
+    }
+    public static void creatWordObjectArrayList(String text,String losung){
+        for (int i=0; i<losung.length(); i++){
+            wordsList.add(new WordObject(text.charAt(i),i));
+            //wordsList.add(new WordObject(text.charAt(i),
+         //           i,
+         //           text,
+         //           losung)
+        //    );
+        }
     }
 
     public void resortWordObject(String text, String losung){

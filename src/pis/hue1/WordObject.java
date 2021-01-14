@@ -6,17 +6,16 @@ public class WordObject {
     private StringBuilder sb;
     private String encryptedSection;
 
+    public WordObject(char ch,int number){
+        setCh(ch);
+        setNumber(number);
+    }
+
     public WordObject(char ch,int number,String text,String losung){
         setCh(ch);
         setNumber(number);
         setEncryptedSection(text,losung);
     }
-
-
-
-
-
-
 
 
 
@@ -38,10 +37,10 @@ public class WordObject {
     /**-----------------------------------------------------*/
     public void setEncryptedSection(String textToEncrypt,String losung){ //added new function to this setter methode
         int jump;
-        for (int i=0; i<textToEncrypt.length(); i++){
-            jump=i+1;
+        for (int i=0; i<losung.length(); i++){
+            jump=i;
 
-            while(jump<=textToEncrypt.length()){
+            while(jump <= textToEncrypt.length()){
                 sb.append(textToEncrypt.charAt(jump));
                 jump +=losung.length();
             }
