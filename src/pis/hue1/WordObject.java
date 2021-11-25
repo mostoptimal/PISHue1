@@ -16,10 +16,6 @@ public class WordObject {
         setNumber(number);
         setEncryptedSection(text,losung);
     }
-
-
-
-
     /**setters und getters*/
     public void setCh(char ch){
         this.ch=ch;
@@ -39,15 +35,12 @@ public class WordObject {
         int jump;
         for (int i=0; i<losung.length(); i++){
             jump=i;
-
             while(jump <= textToEncrypt.length()){
                 sb.append(textToEncrypt.charAt(jump));
                 jump +=losung.length();
             }
             this.encryptedSection=String.valueOf(sb);
         }
-
-
         this.encryptedSection=textToEncrypt;
     }
     public String getEncryptedSection(){

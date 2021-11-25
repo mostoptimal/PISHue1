@@ -5,15 +5,25 @@ import java.util.ArrayList;
 
 public class Wuerfel implements Codec{
 
+    StringBuilder sb1= new StringBuilder();
 
     private String schluessel;
 
-    public Wuerfel(String text,String losung){
-
+    public Wuerfel(){
+        //
     }
-    public String kodiere(String klartext,String schluessel) {
 
-        return "";
+    public Wuerfel(String text,String losung){
+        //
+    }
+
+    public String kodiere(String klartext,String schluessel) {
+        klartext = klartext.replaceAll("\s","");
+        //sb1.append(klartext); //maybe fault to Convert between String and Strinngbuilder
+        for(int i=0; i<=sb1.length(); i++) {
+
+        }
+        return klartext;
     }
     public String dekodiere(String geheimtext) {
 

@@ -12,12 +12,9 @@ public class Caesar implements Codec{
 
         klartext=klartext.toLowerCase();
         for (int i=0; i<klartext.length(); i++){
-
             char next = klartext.charAt(i);
             str.append(shift(next, key));
-
         }
-
         return String.valueOf(str);
     }
     public String dekodiere(String geheimtext){
@@ -26,16 +23,12 @@ public class Caesar implements Codec{
         }
         return String.valueOf(str);
     }
-
     public String gibLosung(){
-
-
         return "";
     }
     public void setzeLosung(String schluessel)throws IllegalArgumentException{
 
     }
-
     public static char shift(char letter, int shift){
         //Buchstaben als Zahl behandeln
         if(letter>='a' && letter <='z'){ //Sonderzeichen nicht veraendern
