@@ -14,10 +14,13 @@ public class Main {
         //Codec codec1= new Wuerfel("","");
         //Codec codec2=new Caesar();
 
-        Wuerfel w1= new Wuerfel();
-        //w1.kodiere(myText,losung);
+        Wuerfel w1 = new Wuerfel(myText,losung);
+        Wuerfel w2 = new Wuerfel();
+
+        w1.kodiere(myText,losung);
         System.out.println(myText);
         System.out.println("w1: " + w1.kodiere(myText.toString(),losung));
+
 
         /** System.out.println(losung);
         System.out.println(sortTextAlphabet(losung));
