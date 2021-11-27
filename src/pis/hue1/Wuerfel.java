@@ -5,9 +5,8 @@ public class Wuerfel implements Codec{
     StringBuilder sb1= new StringBuilder();
     private String schluessel;
     String klartext,losung;
-    char[][] chArr;
-    //fuer die Permutation
-    int[] zahlenLosung;
+    int[] lettersPermutationArray;
+
 
 
     //Constructors
@@ -21,18 +20,13 @@ public class Wuerfel implements Codec{
     }
 
     public String kodiere(String klartext,String schluessel) {
-        klartext = klartext.replaceAll("\s",""); //delete all Spaces: " "
-        int[] x= new int[schluessel.length()];
-        //sb1.append(klartext); //maybe fault to Convert between String and Stringbuilder
-        for (int i=0; i<schluessel.length()-1; i++){
-            for (int j=i; j<schluessel.length(); j++){
-                if (schluessel.charAt(i)<schluessel.charAt(j)){
-                    x[i]++;
-                }
-            }
-        }
+        //delete all Spaces: " "
+        klartext = klartext.replaceAll("\s","");
+        lettersPermutationArray = new int[schluessel.length()];
+        losungNummerieren(schluessel,lettersPermutationArray);
         return klartext;
     }
+
     public String dekodiere(String geheimtext) {
 
         return "";
@@ -50,11 +44,26 @@ public class Wuerfel implements Codec{
         }else
          throw new IllegalArgumentException("Losungswort nicht erlaubt!");
     }
-    void fillAndPrintArray(){
+
+    void losungNummerieren(String schluessel , int[] x){
+
+        for (int i=0; i<schluessel.length(); i++){
+            for (int j=0; j<schluessel.length(); j++){
+                if ((schluessel.charAt(i)>=schluessel.charAt(j)) && (j != i)){
+                    x[i]+=1;
+                }
+            }
+        }
+    }
+
+
+    void fillAndPrintArray(int[] zahlenLosung){
         for (int i=0; i<=schluessel.length(); i++) {
             System.out.print(zahlenLosung[i]+" ");
         }
     }
+
+
 
 }
 
