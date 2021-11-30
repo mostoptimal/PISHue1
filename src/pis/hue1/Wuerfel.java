@@ -4,11 +4,10 @@ import java.util.*;
 
 public class Wuerfel implements Codec {
 
-    StringBuilder sb1 = new StringBuilder();
-    Map<Integer ,Character> arrayOrder=new HashMap<>();
+    StringBuilder encyptedText = new StringBuilder();
+    Map<Integer, Character> arrayOrder = new HashMap<>();
     private String schluessel;
     String klartext, losung;
-    char[] xxx;
 
 
     //Constructors
@@ -52,18 +51,45 @@ public class Wuerfel implements Codec {
     }
 
     void nummerizeKey(String encryptionKey) {
+        StringBuilder s = new StringBuilder(encryptionKey);
         //schlussel in andere array speichern
-        //aufsteigend nummerieren und in neue integer array spreichern
-        //dann die plaetze umsortieren wo sie sein sollen
+        //aufsteigend nummerieren und in neue Map speichern
         // { S C H W A R Z W A L D }
-        // { A A C D H L R S W W Z }
+        // {0=a, 1=a, 2=c, 3=d, 4=h, 5=l, 6=r, 7=s, 8=w, 9=w, 10=z}
         encryptionKey = encryptionKey.toLowerCase();
         int size = encryptionKey.length();
         char[] sortedKey = new char[size];
         sortedKey = encryptionKey.toCharArray();
         Arrays.sort(sortedKey);
         for (int i = 0; i < size; i++) {
-            arrayOrder.put(i,sortedKey[i]);
+            arrayOrder.put(i, sortedKey[i]);
         }
+        //Now: search for the real position in witch Charackter and append the Column (letter by letter) in new StringBuilder
+        int jump = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (encryptionKey.charAt(j) == arrayOrder.get(i)) {
+                    jump = encryptionKey.indexOf(i);
+                    while (jump <= klartext.length()) {
+                        s.append(klartext.charAt(jump));
+                        jump += size;
+                    }
+                }
+            }
+        }
+        System.out.print("Encrypted Text: " + s);
     }
 }
+/**
+ * int jumpingFactor;
+ * for (int i = 0; i < size; i++) {
+ * if (encryptionKey.charAt(i) == arrayOrder.get(i)) {
+ * jumpingFactor = encryptionKey.indexOf(encryptionKey.charAt(i));
+ * while (jumpingFactor < klartext.length()) {
+ * s.append(klartext.charAt(jumpingFactor));
+ * jumpingFactor += size;
+ * }
+ * }
+ * }
+ * System.out.println("Encrypted Text: " + s);
+ */

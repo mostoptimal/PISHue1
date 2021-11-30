@@ -7,7 +7,7 @@ public class Main {
     /*********************************/
     public static void main(String[] args) {
 
-        String noneSecretText = "i am here texting my terminal";
+        String noneSecretText = "eintreffendersendungverspaetetneuerterminfolgt";
         String losung = "SCHWARZWALD";
         //fuer die Permutation
         int[] zahlenLosung = new int[losung.length()];
@@ -24,11 +24,6 @@ public class Main {
         for (int i = 0; i < losung.length(); i++) {
             System.out.print(losung.charAt(i) + "  ");
             System.out.print("  ");
-        }
-        System.out.println();
-        for (int i = 0; i < losung.length(); i++) {
-            System.out.print(w1.lettersPermutationArray[i] + "  ");
-
         }
         System.out.println();
         System.out.print(w1.arrayOrder);
