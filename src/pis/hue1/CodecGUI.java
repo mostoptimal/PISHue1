@@ -10,7 +10,6 @@ public class CodecGUI extends JFrame {
         fenster.setSize(640,480);
         fenster.setVisible(true);
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JLabel text1,text2;
 
         //fenster.add(text1,BorderLayout.NORTH);
