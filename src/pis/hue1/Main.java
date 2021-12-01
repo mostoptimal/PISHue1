@@ -15,18 +15,14 @@ public class Main {
         //Codec codec2=new Caesar();
 
         Wuerfel w1 = new Wuerfel(noneSecretText, losung);
-        Wuerfel w2 = new Wuerfel();
-
-        w1.kodiere(noneSecretText, losung);
-        System.out.println(noneSecretText);
-        System.out.println("w1: " + w1.kodiere(noneSecretText.toString(), losung));
+        //Wuerfel w2 = new Wuerfel();
 
         for (int i = 0; i < losung.length(); i++) {
             System.out.print(losung.charAt(i) + "  ");
-            System.out.print("  ");
         }
         System.out.println();
-        System.out.print(w1.arrayOrder);
+        w1.kodiere(noneSecretText, losung);
+        //System.out.println("w1: " + w1.kodiere(noneSecretText.toString(), losung));
 
     }
 }
