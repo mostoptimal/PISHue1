@@ -3,112 +3,125 @@ package pis.hue1;
 import java.util.*;
 
 public class Wuerfel implements Codec {
-
-    StringBuilder encryptedText = new StringBuilder();
     Map<Integer, Character> arrayOrder = new HashMap<>();
     private String schluessel;
     String klartext, losung;
 
-
-    //Constructors
-    public Wuerfel(String text) {
-        this.klartext=text;
+    /**Constructors
+     1.             */
+    public Wuerfel(String losung) {
+        setzeLosung(losung);
     }
-
+    /** 2.         */
     public Wuerfel(String text, String losung) {
         this.klartext = text;
-        this.losung = losung;
-        //
+        setzeLosung(losung);
+    }
+
+    public String kodiere(String klartext) {
+        String result;
+        String schluessel = gibLosung();
+
+
+        result=encrypt(klartext,schluessel);
+        System.out.println("Encryption Key: " + schluessel);
+        System.out.println("Original Text: " + klartext);
+        System.out.println("after encryption: " + encrypt(klartext, schluessel));
+        System.out.println("--------------------------------");
+        System.out.println("--------------------------------");
+        return result;
+
     }
 
     public String kodiere(String klartext, String schluessel) {
-        //delete all Spaces: " "
-        klartext = klartext.replaceAll("\s", "");
 
-        //calling function that give every Letter number of order
-        nummerizeKey(schluessel);
-        System.out.println(klartext);
+        //encrypt(klartext,schluessel);
+        System.out.println("Encryption Key: " + schluessel);
+        System.out.println("Original Text: " + klartext);
+        System.out.println("--------------------------------");
+        System.out.println("--------------------------------");
+        System.out.println("after encryption: " + encrypt(klartext, schluessel));
+        String resultEncryption;
+        resultEncryption=encrypt(klartext, schluessel);
         //then a function that responsable to encyrpt the Text after the generated order
         //
-
-        return klartext;
+        return resultEncryption;
     }
 
     public String dekodiere(String geheimtext) {
-        //first Thing representing the Text as 2 Demintional Array and as long as the 2nd key
-        //saving the key now vertically ,then do the same process after that with the first key
+
         return "";
     }
+
     /**
      * Setter und Getter
      */
     public String gibLosung() {
-
-        return this.schluessel;
+        return this.losung;
     }
 
-    public void setzeLosung(String schluessel) throws IllegalArgumentException {
-        if (!(schluessel == null || schluessel.length() == 0)) {
-            this.schluessel = schluessel;
-        } else
-            throw new IllegalArgumentException("Losungswort nicht erlaubt!");
-    }
-
-    void nummerizeKey(String encryptionKey) {
-        StringBuilder s = new StringBuilder(encryptionKey);
-        StringBuilder resultText= new StringBuilder();
-        //schlussel in andere array speichern
-        //aufsteigend nummerieren und in neue Map speichern
-        //encryptionKey: { S=0, C=1, H=2, W=3, A=4, R=5, Z=6, W=7, A=8, L=9, D=10 } j
-        //sortedKey:     { 0=a, 1=a, 2=c, 3=d, 4=h, 5=l, 6=r, 7=s, 8=w, 9=w, 10=z } i
-        encryptionKey = encryptionKey.toLowerCase();
-        int size = encryptionKey.length();
-        char[] sortedKey;
-        sortedKey = encryptionKey.toCharArray();
-        Arrays.sort(sortedKey);
-        for (int i = 0; i < size; i++) {
-            arrayOrder.put(i, sortedKey[i]);
-        }
-        //Now: search for the real position in witch Charackter and append the Column (letter by letter) in new StringBuilder
-        //System.out.println("Encryption Key: " + s);
-        System.out.println(arrayOrder);
-        encode(encryptionKey,resultText);
-    }
-    void encode(String encryptionKey, StringBuilder sb) {
-        System.out.println(encryptionKey);
-        //arrayOrder:    { 0=a, 1=a, 2=c, 3=d, 4=h, 5=l, 6=r, 7=s, 8=w, 9=w, 10=z } i
-        //encryptionKey: { S=0, C=1, H=2, W=3, A=4, R=5, Z=6, W=7, A=8, L=9, D=10 } j
-        int size = encryptionKey.length();
-        int jump=0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i!=j && encryptionKey.charAt(j) == arrayOrder.get(i)) {
-                    jump=j;
-                    System.out.print("* "+arrayOrder.get(i)+" ");
-                    while(jump<klartext.length()){
-                        sb.append(klartext.charAt(jump));
-                        jump += size;
-                    }
-                }
+    public void setzeLosung(String losung) throws IllegalArgumentException {
+        for (int i = 0; i < losung.length(); i++) {
+            if (Character.isDigit(losung.charAt(i))){
+                throw new IllegalArgumentException("Keyword allowed just Alphabet Letters , Numbers & Special Characters are not allowed!");
             }
         }
-        System.out.println();
-        System.out.println("SB: "+sb);
-
-        //if (encryptionKey.charAt(j) == arrayOrder.get(i)) {
-        //  for (jump = encryptionKey.indexOf(i); jump <= klartext.length(); jump += size) {ss.append(klartext.charAt(jump));}}
-        }
+        if (!(losung == null || losung.length() == 0)) {
+            this.losung = losung.toLowerCase();
+            System.out.println("losung gesetzt!= "+losung);
+        } else
+            throw new IllegalArgumentException("Keyword allowed just Alphabet Letters , Numbers & Special Characters are not allowed!");
     }
-/**
- * int jumpingFactor;
- * for (int i = 0; i < size; i++) {
- * if (encryptionKey.charAt(i) == arrayOrder.get(i)) {
- * jumpingFactor = encryptionKey.indexOf(encryptionKey.charAt(i));
- * while (jumpingFactor < klartext.length()) {
- * s.append(klartext.charAt(jumpingFactor));
- * jumpingFactor += size;
- * }
- * }
- * }
- * System.out.println("Encrypted Text: " + s);
- */
+
+    int[] nummerizeKey(String encryptionKey) {
+        // Array enthält den Rang der spalten
+        int size= encryptionKey.length();
+        int[] nummerizedColumn = new int[size];
+        for (int i = 0; i < encryptionKey.length(); i++) {
+            // Rang des i. Elements ermitteln
+            nummerizedColumn[i] = 0;
+            for (int j = 0; j < encryptionKey.length(); j++) {
+                if (encryptionKey.charAt(j) < encryptionKey.charAt(i) || (encryptionKey.charAt(j) == encryptionKey.charAt(i) && j < i))
+                    nummerizedColumn[i]++;
+            }
+        }
+        return nummerizedColumn;
+    }
+    int[] reOrder(int[] perm) {
+        // vertauscht Index und Wert eines Arrays
+        int[] p = new int[perm.length];
+        for (int i = 0; i < p.length; i++)
+            p[perm[i]] = i;
+        return p;
+    }
+    String encrypt(String encryptionText, String encryptionkey) {
+        int encryptionKeySize = encryptionkey.length();
+        int encryptionTextSize = encryptionText.length();
+        int linesSize = (int) Math.ceil(encryptionTextSize / encryptionKeySize);
+
+        // Alle Spalten leer, cause I don't want to add over letter with null
+        String[] cols = new String[encryptionKeySize];
+        for (int i = 0; i < encryptionKeySize; i++) {
+            cols[i] = "";
+        }
+        // Alle Spalten füllen
+        for (int i = 0; i < encryptionTextSize; i++) {
+            int col = i % encryptionKeySize;
+            cols[col] += encryptionText.charAt(i);
+        }
+        // Alle Spalten permutiert zusammenbauen
+        String text = "";
+        for (int i = 0; i < cols.length; i++) {
+            int j = reOrder(nummerizeKey(encryptionkey))[i];
+            text += cols[j];
+        }
+        return text;
+    }
+
+    void decrypt(String secretText) {
+        String losung= gibLosung();
+        int size = secretText.length();
+
+
+    }
+}

@@ -11,15 +11,16 @@ public class CodecGUI extends JFrame {
     public static void main(String[] args) {
         JFrame mainFrame = new JFrame();
         Panel panelButtons = new Panel();
-        Panel panelTextArea = new Panel();
+        Panel panelTextField = new Panel();
         Panel panelWeird = new Panel();
-        mainFrame.setTitle("Mein erstes Swing-Fenster");
+        mainFrame.setTitle("Codec App");
         mainFrame.setSize(640,480);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         //Window Elements
         Button btnWuerfel = new Button("Doppel Wuerfel encrypt");
-        Button btnCaeser = new Button("Caeser");
+        Button btnCaeser = new Button("Caeser encrypt");
         Button btnExit = new Button("Exit");
         btnExit.setPreferredSize(new Dimension(60,30));
         TextField tfWuerfel = new TextField("Text here to encrypt with Doppel Wuerfel");
@@ -32,11 +33,11 @@ public class CodecGUI extends JFrame {
         panelButtons.add(btnWuerfel);
         panelButtons.add(btnCaeser);
         panelWeird.add(btnExit);
-        panelTextArea.add(tfWuerfel);
-        panelTextArea.add(tfCaeser);
+        panelTextField.add(tfWuerfel);
+        panelTextField.add(tfCaeser);
 
         mainFrame.getContentPane().add(BorderLayout.NORTH,panelButtons);
-        mainFrame.getContentPane().add(BorderLayout.CENTER,panelTextArea);
+        mainFrame.getContentPane().add(BorderLayout.CENTER,panelTextField);
         mainFrame.getContentPane().add(BorderLayout.SOUTH,panelWeird);
 
         Color hell =   new Color(200,200,200);
@@ -45,17 +46,17 @@ public class CodecGUI extends JFrame {
         btnExit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
             }
 
             @Override
