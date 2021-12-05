@@ -5,7 +5,7 @@ package pis.hue1;
 
 
 public class Caesar implements Codec {
-    StringBuilder str = new StringBuilder();
+    String str = "";
     private String schluessel;
     int key = 3;
 
@@ -15,31 +15,32 @@ public class Caesar implements Codec {
 
     public String kodiere(String klartext) {
         klartext = klartext.toLowerCase();
-        String schluessel=gibLosung();
-        key=schluessel.length();
+        String schluessel = gibLosung();
+        key = schluessel.length();
         for (int i = 0; i < klartext.length(); i++) {
             char next = klartext.charAt(i);
-            str.append(shift(next, key));
+            str +=(shift(next, key));
         }
         return String.valueOf(str);
     }
 
     public String kodiere(String klartext, String losung) {
-        String schluessel=gibLosung();
-        key=schluessel.length();
+        String schluessel = gibLosung();
+        key = schluessel.length();
         klartext = klartext.toLowerCase();
         for (int i = 0; i < klartext.length(); i++) {
             char next = klartext.charAt(i);
-            str.append(shift(next, key));
+            str += (shift(next, key));
         }
         return String.valueOf(str);
     }
 
     public String dekodiere(String geheimtext) {
+        int key = gibLosung().length();
         for (int i = 0; i < geheimtext.length(); i++) {
-            str.append(geheimtext.charAt(i) - 3);
+            str += (geheimtext.charAt(i) - key);
         }
-        return String.valueOf(str);
+        return str;
     }
 
     public String gibLosung() {
@@ -53,7 +54,7 @@ public class Caesar implements Codec {
             throw new IllegalArgumentException("Losungswort nicht erlaubt!");
     }
 
-    public static char shift(char letter, int shift) {
+    char shift(char letter, int shift) {
         //Buchstaben als Zahl behandeln
         if (letter >= 'a' && letter <= 'z') { //Sonderzeichen nicht veraendern
             letter += shift;

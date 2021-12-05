@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 public class Main {
     /*********************************/
     public static void main(String[] args) {
-        Codec codec_1 = new Wuerfel("Schwarzwald");
-        Codec codec_2 = new Wuerfel("Schwenningen");
+        Codec codec_1 = new Wuerfel("THM");
+        Codec codec_2 = new Wuerfel("Mittelhessen");
         //Codec codec_3 = new Caesar();
         codec_1.setzeLosung("Schwarzwald");
         codec_2.setzeLosung("Schwenningen");
@@ -18,12 +18,15 @@ public class Main {
 
 
         String noneSecretText="eintreffendersendungverspaetetneuerterminfolgt";
+        String encryptedText="ndeeelmtsvtrngieedffprugnennsefiteereertoarutn";
 
         String encrypted;
-        encrypted= codec_1.kodiere(noneSecretText);
-        System.out.println("encrypted Text: "+encrypted);
+        //encrypted= codec_1.kodiere(noneSecretText);
+        //System.out.println("encrypted Text: "+encrypted);
         System.out.println("************************************");
-        codec_2.kodiere(encrypted);
+        //String encrypted2;
+        //encrypted2= codec_2.kodiere(encrypted);
+        codec_2.dekodiere(encryptedText);
         //codec_1.kodiere(codec_1.kodiere(noneSecretText,losung1),losung2);
 
 
