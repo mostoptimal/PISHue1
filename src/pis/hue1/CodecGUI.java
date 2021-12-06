@@ -89,87 +89,68 @@ class EncryptionDecryption extends JFrame implements ActionListener {
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        btnEncrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnEncrypt.addActionListener(this);
-            }
-        });
-        btnDecrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnDecrypt.addActionListener(this);
-            }
-        });
+        btnEncrypt.addActionListener(this);
+        btnDecrypt.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String textToEncode = taInput.getText();
-        String textToDecode = taOutput.getText();
-        String keyFirst = JschluesselTA1.getText();
-        String keySecond = JschluesselTA2.getText();
+        String textToDecode = taInput.getText();
+        String keyFirst = JschluesselTA1.getText().toLowerCase();
+        String keySecond = JschluesselTA2.getText().toLowerCase();
         //Encrypt Action
         if (e.getSource() == btnEncrypt) {
             if (JradioWuerfel.isSelected()) {
                 String encodedText;
                 if (textToEncode.equals("") || keyFirst.equals("") || keySecond.equals("")) {
-                    JOptionPane.showMessageDialog(this, "please Fill FirstKey, Last Key and Input Area!","Warning",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "please Fill FirstKey, Last Key and Input Area!", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
+                    codec1 = new Wuerfel(keyFirst);
+                    codec2 = new Wuerfel(keySecond);
                     encodedText = codec1.kodiere(textToEncode, keyFirst);
                     encodedText = codec2.kodiere(encodedText, keySecond);
                     taOutput.setText(encodedText);
                 }
             } else {
                 if (JradioCaeser.isSelected()) {
-                    if (textToEncode == "") {
+                    if (textToEncode.equals("")) {
                         JOptionPane.showMessageDialog(this, "Please Fill the Input text");
                     } else {
-                        String encodedText = "";
-                        encodedText = codecCs.kodiere(textToEncode);
-
+                        String encodedText;
+                        codecCs = new Caesar();
+                        encodedText = codecCs.kodiere(textToEncode, keyFirst);
+                        taOutput.setText(encodedText);
                     }
                 }
             }
         }
         //Decrypt Action
-        if (e.getSource() == btnDecrypt){
-            if (JradioCaeser.isSelected()){
-               if (textToDecode.equals("")){
-                   JOptionPane.showMessageDialog(this,"please write the Text you want to Decode !");
-               }else{
-                   codecCs.dekodiere(textToDecode);
-               }
-            }else
-            if(JradioWuerfel.isSelected()){
-                if (textToDecode.equals("")||keySecond.equals("")||keyFirst.equals("")){
-                    JOptionPane.showMessageDialog(this,"Please Fill The Keys and the Input Text!");
-                }else{
-                    String decodedText="";
-                    decodedText=codec2.dekodiere(textToDecode);
-                    decodedText=codec1.dekodiere(decodedText);
+        if (e.getSource() == btnDecrypt) {
+            if (JradioCaeser.isSelected()) {
+                codecCs = new Caesar();
+                if (textToDecode.equals("") || keyFirst.equals("")) {
+                    JOptionPane.showMessageDialog(this, "please write the Text you want to Decode and FirstKey !");
+                } else {
+                    String decodedCSText = "";
+                    codecCs.setzeLosung(keyFirst);
+                    decodedCSText = codecCs.dekodiere(textToDecode);
+                    taOutput.setText(decodedCSText);
+                }
+            } else if (JradioWuerfel.isSelected()) {
+                if (textToDecode.equals("") || keySecond.equals("") || keyFirst.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Please Fill The Keys and the Input Text!");
+                } else {
+                    String decodedText;
+                    decodedText = codec2.dekodiere(textToDecode);
+                    decodedText = codec1.dekodiere(decodedText);
                     taOutput.setText(decodedText);
                 }
             }
         }
-
     }
 
     public static void main(String[] args) {
         EncryptionDecryption mainFrame = new EncryptionDecryption();
-        Codec codec_1 = new Wuerfel("THM");
-        Codec codec_2 = new Wuerfel("Mittelhessen");
-        Codec codec_3 = new Caesar();
-
     }
 }
-
-
-public class CodecGUI {
-
-
-}
-
-/**
- *
- */

@@ -28,6 +28,7 @@ public class Caesar implements Codec {
     //make the same Thing from above ,but with 2 Paramemters
     public String kodiere(String klartext, String losung) {
         // key is integer Value ,contains how many Characters to shift
+        setzeLosung(losung);
         key = schluessel.length();
         klartext = klartext.toLowerCase();
         //making the for loop shift for every Character

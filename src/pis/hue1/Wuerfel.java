@@ -31,8 +31,8 @@ public class Wuerfel implements Codec {
     }
 
     public String kodiere(String klartext, String schluessel) {
-
         String resultEncryption;
+
         //the Operations are contained in the encrypt Function
         resultEncryption = encrypt(klartext, schluessel);
         return resultEncryption;
@@ -53,7 +53,7 @@ public class Wuerfel implements Codec {
     public void setzeLosung(String losung) throws IllegalArgumentException {
         //for loop to test if every Character is Digit (Integer Value)
         for (int i = 0; i < losung.length(); i++) {
-            if (Character.isDigit(losung.charAt(i))) {
+            if (!(Character.isLetter(losung.charAt(i)))) {
                 throw new IllegalArgumentException("Keyword allowed just Alphabet Letters , Numbers & Special Characters are not allowed!");
             }
         }
