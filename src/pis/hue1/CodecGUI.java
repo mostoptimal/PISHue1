@@ -5,57 +5,72 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class EncryptionDecryption extends JFrame implements ActionListener{
+class EncryptionDecryption extends JFrame implements ActionListener {
     Codec codec1;
     Codec codec2;
     Codec codecCs;
+    JFrame mainFrame;
+    FlowLayout mainLayout;
+    Button btnEncrypt;
+    Button btnDecrypt;
+    ButtonGroup btnEncryptGrp;
+    JRadioButton JradioWuerfel;
+    JRadioButton JradioCaeser;
+    JLabel JschluesselLabel1;
+    TextField JschluesselTA1;
+    JLabel JschluesselLabel2;
+    TextField JschluesselTA2;
+    JLabel JLIntput;
+    TextArea taInput;
+    JLabel JLOutput;
+    TextArea taOutput;
 
-    public EncryptionDecryption(){
-        Container ct;
-        ct= getContentPane();
-        SpringLayout mainLayout = new SpringLayout();
-        ct.setLayout(mainLayout);
-        ct.setBackground(Color.BLUE);
-        JFrame mainFrame = new JFrame();
+
+    public EncryptionDecryption() {
+
+        mainLayout = new FlowLayout();
+        mainFrame = new JFrame();
 
         Panel panelButtons = new Panel();
         Panel panelTextField = new Panel();
-        Panel panelWeird = new Panel();
         Panel panelRadioButtons = new Panel();
         Panel panelSchluessel = new Panel();
 
-        panelButtons.setLayout(new CardLayout());
-        panelTextField.setLayout(new CardLayout());
-        panelRadioButtons.setLayout(new CardLayout());
-        panelSchluessel.setLayout(new CardLayout());
-        panelWeird.setLayout(new CardLayout());
-
-
-        mainFrame.setTitle("Codec App");
-        mainFrame.setSize(640,480);
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Window Elements
-        Button btnEncrypt = new Button("Encrypt");
-        Button btnDecrypt = new Button("Decrypt");
+        btnEncrypt = new Button("Encrypt");
+        btnDecrypt = new Button("Decrypt");
 
-        JRadioButton JradioWuerfel = new JRadioButton("Wuerfel");
-        JRadioButton JradioCaeser = new JRadioButton("Caeser");
+        btnEncryptGrp = new ButtonGroup();
+        JradioWuerfel = new JRadioButton("Wuerfel");
+        JradioWuerfel.setSelected(true);
+        JradioCaeser = new JRadioButton("Caeser");
+        btnEncryptGrp.add(JradioCaeser);
+        btnEncryptGrp.add(JradioWuerfel);
 
-        TextArea taInput = new TextArea("Input Text");
-        TextArea taOutput = new TextArea("Output Text");
-        JLabel JschluesselLabel1 =new JLabel("Schluessel 1");
-        TextField JschluesselTA1 =new TextField("");
-        JLabel JschluesselLabel2 =new JLabel("Schluessel 2");
-        TextField JschluesselTA2 =new TextField("");
+        JschluesselLabel1 = new JLabel("Schluessel 1");
+        JschluesselTA1 = new TextField("");
+        JschluesselTA1.setPreferredSize(new Dimension(120, 20));
+
+        JschluesselLabel2 = new JLabel("Schluessel 2");
+        JschluesselTA2 = new TextField("");
+        JschluesselTA2.setPreferredSize(new Dimension(120, 20));
+
+        JLIntput = new JLabel("Input Text");
+        taInput = new TextArea();
+        JLOutput = new JLabel("output Text");
+        taOutput = new TextArea();
+
 
         panelButtons.add(btnEncrypt);
         panelButtons.add(btnDecrypt);
 
         panelRadioButtons.add(JradioWuerfel);
         panelRadioButtons.add(JradioCaeser);
+
+        panelTextField.add(JLIntput);
         panelTextField.add(taInput);
+        panelTextField.add(JLOutput);
         panelTextField.add(taOutput);
         //
         panelSchluessel.add(JschluesselLabel1);
@@ -63,43 +78,98 @@ class EncryptionDecryption extends JFrame implements ActionListener{
         panelSchluessel.add(JschluesselLabel2);
         panelSchluessel.add(JschluesselTA2);
         //
-        mainFrame.getContentPane().add(BorderLayout.NORTH,panelButtons);
-        mainFrame.getContentPane().add(BorderLayout.CENTER,panelRadioButtons);
-        mainFrame.getContentPane().add(BorderLayout.CENTER,panelSchluessel);
-        mainFrame.getContentPane().add(BorderLayout.SOUTH,panelTextField);
+        mainFrame.getContentPane().add(panelButtons);
+        mainFrame.getContentPane().add(panelRadioButtons);
+        mainFrame.getContentPane().add(panelSchluessel);
+        mainFrame.getContentPane().add(panelTextField);
 
-        //mainFrame.getContentPane().add(BorderLayout.SOUTH,panelWeird);
-
-        Color hell =   new Color(200,200,200);
-        Font mono = new Font("monospaced",Font.BOLD+Font.ITALIC,30);
+        mainFrame.setTitle("Codec App");
+        mainFrame.setLayout(mainLayout);
+        mainFrame.setSize(1200, 300);
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         btnEncrypt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                btnEncrypt.addActionListener(this);
+            }
+        });
+        btnDecrypt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnDecrypt.addActionListener(this);
             }
         });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String textToEncode = taInput.getText();
+        String textToDecode = taOutput.getText();
+        String keyFirst = JschluesselTA1.getText();
+        String keySecond = JschluesselTA2.getText();
+        //Encrypt Action
+        if (e.getSource() == btnEncrypt) {
+            if (JradioWuerfel.isSelected()) {
+                String encodedText;
+                if (textToEncode.equals("") || keyFirst.equals("") || keySecond.equals("")) {
+                    JOptionPane.showMessageDialog(this, "please Fill FirstKey, Last Key and Input Area!","Warning",JOptionPane.WARNING_MESSAGE);
+                } else {
+                    encodedText = codec1.kodiere(textToEncode, keyFirst);
+                    encodedText = codec2.kodiere(encodedText, keySecond);
+                    taOutput.setText(encodedText);
+                }
+            } else {
+                if (JradioCaeser.isSelected()) {
+                    if (textToEncode == "") {
+                        JOptionPane.showMessageDialog(this, "Please Fill the Input text");
+                    } else {
+                        String encodedText = "";
+                        encodedText = codecCs.kodiere(textToEncode);
+
+                    }
+                }
+            }
+        }
+        //Decrypt Action
+        if (e.getSource() == btnDecrypt){
+            if (JradioCaeser.isSelected()){
+               if (textToDecode.equals("")){
+                   JOptionPane.showMessageDialog(this,"please write the Text you want to Decode !");
+               }else{
+                   codecCs.dekodiere(textToDecode);
+               }
+            }else
+            if(JradioWuerfel.isSelected()){
+                if (textToDecode.equals("")||keySecond.equals("")||keyFirst.equals("")){
+                    JOptionPane.showMessageDialog(this,"Please Fill The Keys and the Input Text!");
+                }else{
+                    String decodedText="";
+                    decodedText=codec2.dekodiere(textToDecode);
+                    decodedText=codec1.dekodiere(decodedText);
+                    taOutput.setText(decodedText);
+                }
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+        EncryptionDecryption mainFrame = new EncryptionDecryption();
+        Codec codec_1 = new Wuerfel("THM");
+        Codec codec_2 = new Wuerfel("Mittelhessen");
+        Codec codec_3 = new Caesar();
 
     }
 }
 
 
-public class CodecGUI{
-    public static void main(String[] args) {
-        EncryptionDecryption mainFrame = new EncryptionDecryption();
-        Codec codec_1=new Wuerfel("THM");
-        Codec codec_2=new Wuerfel("Mittelhessen");
-        Codec codec_3=new Caesar();
-
-    }
+public class CodecGUI {
 
 
 }
 
 /**
-
+ *
  */

@@ -26,9 +26,7 @@ public class Wuerfel implements Codec {
 
     public String kodiere(String klartext) {
         String result;
-        String schluessel = gibLosung();
-
-
+        String schluessel = gibLosung().toLowerCase();
         result = encrypt(klartext, schluessel);
         System.out.println("Encryption Key: " + schluessel);
         System.out.println("Original Text: " + klartext);
@@ -74,7 +72,7 @@ public class Wuerfel implements Codec {
             }
         }
         if (!(losung == null || losung.length() == 0)) {
-            this.losung = losung.toLowerCase();
+            this.losung = losung;
             System.out.println("losung gesetzt!= " + losung);
         } else
             throw new IllegalArgumentException("Keyword allowed just Alphabet Letters , Numbers & Special Characters are not allowed!");
@@ -128,51 +126,22 @@ public class Wuerfel implements Codec {
         return encryptedText;
     }
 
-/**
-    char[] nullifyLastPlaces(char[] charArray, String secretText, int linesSize) {
-        String losung = gibLosung();
-        int sizeOfRoundedArray = linesSize * losung.length();
 
-        if (sizeOfRoundedArray > secretText.length()) {
-            sizeOfRoundedArray = sizeOfRoundedArray - secretText.length();
-            for (int i = sizeOfRoundedArray; i >= 0; i--) {
-                charArray[i] = '*'; //nullify the Last Characters
-            }
-        }
-        return charArray;
-    }
-*/
     String decrypt(String secretText) {
-        String losung = gibLosung();
+        String losung = gibLosung().toLowerCase();
         int secretTextSize = secretText.length();
         int losungSize = losung.length();
         int linesSize = (int) Math.ceil(secretTextSize / losungSize);
         resultCharArray = new char[secretTextSize];
 
-        //resultCharArray = nullifyLastPlaces(resultCharArray, secretText, linesSize);
-        // emptying the String array
-        /*
-        String[] cols = new String[losungSize];
-
-        for (int i = 0; i < losungSize; i++) {
-            cols[i] = "";
-        }
-        //refilling the String array
-        for (int i = 0; i < secretTextSize; i++) {
-            int col = i % losungSize;
-            cols[col] += secretText.charAt(i);
-        }
-*/
-
         int[] pib = nummerizeKey(losung);
         pib=reOrder(pib);
-        String text = "";
+        String resultText = "";
         int position;
         int secretTextLengthCounter = 0;
         for (int i = 0; i < losungSize; i++) {
             position = pib[i];
             for (int j = 0; j < linesSize; j++) {
-
                 while (position < secretTextSize && secretTextLengthCounter <= secretTextSize) {
                     resultCharArray[position] = secretText.charAt(secretTextLengthCounter);
                     position += losungSize;
@@ -180,30 +149,13 @@ public class Wuerfel implements Codec {
                 }
             }
         }
-        ///////
-/*        int b = 0;
-        while (b < losungSize) {
-            jumpLosungSize = pib[b];
-            for (int k = 0; k < losungSize; k++) {
-                for (int j = 0; j < secretTextSize; j++) {
-                    while (jumpLosungSize < secretTextSize) {
-                        resultCharArray[jumpLosungSize] = secretText.charAt(j);
-                        jumpLosungSize += losungSize;
-                    }
-                }
-            }
-            b++;
-        }*/
-        ///////
-
 
         for (char c : resultCharArray) {
-            text+=c;
+            resultText+=c;
             System.out.print(" " + c);
         }
 
-        System.out.println("\n Text: " + text);
-        return text;
+        return resultText;
 
     }
 }

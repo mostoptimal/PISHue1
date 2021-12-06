@@ -7,10 +7,10 @@ package pis.hue1;
 public class Caesar implements Codec {
     String str = "";
     private String schluessel;
-    int key = 3;
+    int key;
 
     public Caesar() {
-        //this.schluessel=gibLosung();
+
     }
 
     public String kodiere(String klartext) {
@@ -19,7 +19,7 @@ public class Caesar implements Codec {
         key = schluessel.length();
         for (int i = 0; i < klartext.length(); i++) {
             char next = klartext.charAt(i);
-            str +=(shift(next, key));
+            str += (shift(next, key));
         }
         return String.valueOf(str);
     }
@@ -36,11 +36,16 @@ public class Caesar implements Codec {
     }
 
     public String dekodiere(String geheimtext) {
-        int key = gibLosung().length();
-        for (int i = 0; i < geheimtext.length(); i++) {
-            str += (geheimtext.charAt(i) - key);
+        key=gibLosung().length();
+        String decoded = "";
+        char thisChar;
+        for(int i=0; i<geheimtext.length(); i++){
+            thisChar= geheimtext.charAt(i);
+            //Jeden Buchstaben verschieben und zwar um (26-Schluessel(key)) Stellen
+            //und an entschluesselten Text anhaengen
+            decoded += shift(thisChar, 26 - key);
         }
-        return str;
+        return decoded;
     }
 
     public String gibLosung() {
@@ -60,6 +65,12 @@ public class Caesar implements Codec {
             letter += shift;
             while (letter > 'z') {
                 letter -= 26;
+            }
+        }
+        if (letter >= 'A' && letter <= 'Z' ) {
+            letter += shift;
+            while (letter > 'Z'){
+                letter-=26;
             }
         }
         return letter;
