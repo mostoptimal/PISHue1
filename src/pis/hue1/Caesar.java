@@ -9,6 +9,10 @@ public class Caesar implements Codec {
         //Constructor
     }
 
+    /**
+     * @param klartext
+     * @return
+     */
     public String kodiere(String klartext) {
         //make the Text small letters
         klartext = klartext.toLowerCase();
@@ -39,6 +43,10 @@ public class Caesar implements Codec {
         return String.valueOf(str);
     }
 
+    /**
+     * @param geheimtext
+     * @return
+     */
     public String dekodiere(String geheimtext) {
         key=gibLosung().length();
         // prepairing decoded String to contain the Result
@@ -52,10 +60,19 @@ public class Caesar implements Codec {
         }
         return decoded;
     }
+
+    /**
+     * @return
+     */
     //getter Function
     public String gibLosung() {
         return this.schluessel;
     }
+
+    /**
+     * @param schluessel
+     * @throws IllegalArgumentException
+     */
     //setter Function
     public void setzeLosung(String schluessel) throws IllegalArgumentException {
         if (!(schluessel == null || schluessel.length() == 0)) {

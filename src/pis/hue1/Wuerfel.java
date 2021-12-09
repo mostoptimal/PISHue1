@@ -7,15 +7,22 @@ public class Wuerfel implements Codec {
     //the Char Array is to contain the Characters (after encrypting / decrypting) Letter by Letter
     char[] resultCharArray;
 
+
     /**
-     * Constructors
-     * 1. First one with just key Parameter
+     * @param losung
+     *
+     *      * Constructors
+     *      * 1. First one with just key Parameter
+     *
      */
     public Wuerfel(String losung) {
         setzeLosung(losung);
     }
 
+
     /**
+     * @param text
+     * @param losung
      * 2. Second one with 2 params ,the text to encode/decode and keyword
      */
     public Wuerfel(String text, String losung) {
@@ -23,6 +30,10 @@ public class Wuerfel implements Codec {
         setzeLosung(losung);
     }
 
+    /**
+     * @param klartext
+     * @return
+     */
     public String kodiere(String klartext) {
         String result;
         String schluessel = gibLosung().toLowerCase();
@@ -30,6 +41,11 @@ public class Wuerfel implements Codec {
         return result;
     }
 
+    /**
+     * @param klartext
+     * @param schluessel
+     * @return
+     */
     public String kodiere(String klartext, String schluessel) {
         String resultEncryption;
 
@@ -38,6 +54,10 @@ public class Wuerfel implements Codec {
         return resultEncryption;
     }
 
+    /**
+     * @param geheimtext
+     * @return
+     */
     public String dekodiere(String geheimtext) {
         String result;
         //decrypt Function makes the operations of decoding
@@ -45,11 +65,20 @@ public class Wuerfel implements Codec {
         return result;
     }
 
-    /** Getter */
+
+    /**
+     * @return
+     * Getter
+     */
     public String gibLosung() {
         return this.losung;
     }
-    /** Setter */
+
+    /**
+     * @param losung
+     * @throws IllegalArgumentException
+     * Setter
+     */
     public void setzeLosung(String losung) throws IllegalArgumentException {
         //for loop to test if every Character is Digit (Integer Value)
         for (int i = 0; i < losung.length(); i++) {
@@ -65,10 +94,12 @@ public class Wuerfel implements Codec {
             throw new IllegalArgumentException("Keyword allowed just Alphabet Letters , Numbers & Special Characters are not allowed!");
     }
 
+
     /**
-     *  nummerizeKey is to give back permutations of letters of keyword
-     *
-     **/
+     * @param encryptionKey
+     * @return
+     * nummerizeKey is to give back permutations of letters of keyword
+     */
     int[] nummerizeKey(String encryptionKey) {
 
         int size = encryptionKey.length();
@@ -87,9 +118,12 @@ public class Wuerfel implements Codec {
         return nummerizedColumn;
     }
 
+
     /**
+     * @param anyPermutationArray
+     * @return
      * reOrder Function is to reSort the permutation array ascending
-     * */
+     */
     int[] reOrder(int[] anyPermutationArray) {
         int[] sortedIntAscending = new int[anyPermutationArray.length];
         for (int i = 0; i < sortedIntAscending.length; i++) {
@@ -99,6 +133,11 @@ public class Wuerfel implements Codec {
         return sortedIntAscending;
     }
 
+    /**
+     * @param encryptionText
+     * @param encryptionkey
+     * @return
+     */
     String encrypt(String encryptionText, String encryptionkey) {
         int encryptionKeySize = encryptionkey.length();
         int encryptionTextSize = encryptionText.length();
@@ -123,9 +162,12 @@ public class Wuerfel implements Codec {
         return encryptedText;
     }
 
+
     /**
+     * @param secretText
+     * @return
      * decrypt makes the reverse of encrypt
-     * */
+     */
     String decrypt(String secretText) {
         String losung = gibLosung().toLowerCase();
         int secretTextSize = secretText.length();

@@ -26,6 +26,9 @@ class EncryptionDecryption extends JFrame implements ActionListener {
     TextArea taOutput;
 
 
+    /**
+     *
+     */
     public EncryptionDecryption() {
 
         mainLayout = new FlowLayout();
@@ -93,6 +96,9 @@ class EncryptionDecryption extends JFrame implements ActionListener {
         btnDecrypt.addActionListener(this);
     }
 
+    /**
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String textToEncode = taInput.getText();
@@ -150,6 +156,9 @@ class EncryptionDecryption extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         EncryptionDecryption mainFrame = new EncryptionDecryption();
     }
