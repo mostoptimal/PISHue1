@@ -97,7 +97,7 @@ class EncryptionDecryption extends JFrame implements ActionListener {
     }
 
     /**
-     * @param e
+     * @param e is an Event that be performed when the user clicks the Encrypt/Decrypt Buttons and clicks the Radio Buttons
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -157,7 +157,8 @@ class EncryptionDecryption extends JFrame implements ActionListener {
     }
 
     /**
-     * @param args
+     * @param args just normal main method argument that I have never used
+     *             It is a Joke :P
      */
     public static void main(String[] args) {
         EncryptionDecryption mainFrame = new EncryptionDecryption();

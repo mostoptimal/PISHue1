@@ -9,7 +9,7 @@ public class Wuerfel implements Codec {
 
 
     /**
-     * @param losung
+     * @param losung conains the key to be used in encoding/decoding
      *
      *      * Constructors
      *      * 1. First one with just key Parameter
@@ -21,8 +21,8 @@ public class Wuerfel implements Codec {
 
 
     /**
-     * @param text
-     * @param losung
+     * @param text klartext
+     * @param losung keyword
      * 2. Second one with 2 params ,the text to encode/decode and keyword
      */
     public Wuerfel(String text, String losung) {
@@ -31,8 +31,8 @@ public class Wuerfel implements Codec {
     }
 
     /**
-     * @param klartext
-     * @return
+     * @param klartext String text as input Text
+     * @return result:contains the text after encoding
      */
     public String kodiere(String klartext) {
         String result;
@@ -42,9 +42,9 @@ public class Wuerfel implements Codec {
     }
 
     /**
-     * @param klartext
-     * @param schluessel
-     * @return
+     * @param klartext klartext: String text
+     * @param schluessel: keyword: String keyword
+     * @return resultEncryption: contains the encoded Text
      */
     public String kodiere(String klartext, String schluessel) {
         String resultEncryption;
@@ -55,8 +55,8 @@ public class Wuerfel implements Codec {
     }
 
     /**
-     * @param geheimtext
-     * @return
+     * @param geheimtext String text ,decoded Text
+     * @return result: String of the decoded Text
      */
     public String dekodiere(String geheimtext) {
         String result;
@@ -67,17 +67,17 @@ public class Wuerfel implements Codec {
 
 
     /**
-     * @return
-     * Getter
+     * Getter Function
+     * @return String of keyword
      */
     public String gibLosung() {
         return this.losung;
     }
 
     /**
-     * @param losung
-     * @throws IllegalArgumentException
-     * Setter
+     *  Setter
+     *  @param losung String Text
+     * @throws IllegalArgumentException if the key contains numbers or there is no written key
      */
     public void setzeLosung(String losung) throws IllegalArgumentException {
         //for loop to test if every Character is Digit (Integer Value)
@@ -96,9 +96,9 @@ public class Wuerfel implements Codec {
 
 
     /**
-     * @param encryptionKey
-     * @return
-     * nummerizeKey is to give back permutations of letters of keyword
+     * Subfunction
+     * @param encryptionKey will be passed as String Text
+     * @return integer array will come out as array contains the permutations of letters from given keyword
      */
     int[] nummerizeKey(String encryptionKey) {
 
@@ -120,8 +120,9 @@ public class Wuerfel implements Codec {
 
 
     /**
-     * @param anyPermutationArray
-     * @return
+     * Subfunction
+     * @param anyPermutationArray integer array wich contains the permutations
+     * @return ascending reordered integer array
      * reOrder Function is to reSort the permutation array ascending
      */
     int[] reOrder(int[] anyPermutationArray) {
@@ -134,9 +135,9 @@ public class Wuerfel implements Codec {
     }
 
     /**
-     * @param encryptionText
-     * @param encryptionkey
-     * @return
+     * @param encryptionText String text to encrypt
+     * @param encryptionkey String keyword of the key that helps to encrypt
+     * @return encryptedText: String value ,the Text after encryption
      */
     String encrypt(String encryptionText, String encryptionkey) {
         int encryptionKeySize = encryptionkey.length();
@@ -162,10 +163,9 @@ public class Wuerfel implements Codec {
         return encryptedText;
     }
 
-
     /**
-     * @param secretText
-     * @return
+     * @param secretText String Text would be encrypted
+     * @return resultText: value of String after decryption
      * decrypt makes the reverse of encrypt
      */
     String decrypt(String secretText) {

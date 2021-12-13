@@ -10,8 +10,8 @@ public class Caesar implements Codec {
     }
 
     /**
-     * @param klartext
-     * @return
+     * @param klartext String datatype to be encrypted
+     * @return str from Datatype String contains the Sequence of encrypted chars
      */
     public String kodiere(String klartext) {
         //make the Text small letters
@@ -29,7 +29,13 @@ public class Caesar implements Codec {
         //
         return String.valueOf(str);
     }
-    //make the same Thing from above ,but with 2 Paramemters
+
+    /**
+     * make the same Thing from above ,but with 2 Paramemters
+     * @param klartext
+     * @param losung
+     * @return
+     */
     public String kodiere(String klartext, String losung) {
         // key is integer Value ,contains how many Characters to shift
         setzeLosung(losung);
@@ -44,8 +50,8 @@ public class Caesar implements Codec {
     }
 
     /**
-     * @param geheimtext
-     * @return
+     * @param geheimtext String of encrypted Text
+     * @return String contains the Sequence of Chars after they shifted to the right place
      */
     public String dekodiere(String geheimtext) {
         key=gibLosung().length();
@@ -62,7 +68,7 @@ public class Caesar implements Codec {
     }
 
     /**
-     * @return
+     * @return this.schluessel contains the String of key that helps for encoding/decoding
      */
     //getter Function
     public String gibLosung() {
@@ -70,8 +76,8 @@ public class Caesar implements Codec {
     }
 
     /**
-     * @param schluessel
-     * @throws IllegalArgumentException
+     * @param schluessel gives the ey to this function and test if it allowed
+     * @throws IllegalArgumentException if the key contains Numbers of there is no key(length = 0)
      */
     //setter Function
     public void setzeLosung(String schluessel) throws IllegalArgumentException {
@@ -80,7 +86,13 @@ public class Caesar implements Codec {
         } else
             throw new IllegalArgumentException("Losungswort nicht erlaubt!");
     }
-    //the Function shift changes every Character (shifts) but in the Alphabetic Range (between a and z (Capital or small Letters))
+
+    /**
+     * the Function shift changes every Character (shifts) but in the Alphabetic Range (between a and z (Capital or small Letters))
+     * @param letter char(next),is the Character that need to be shifted
+     * @param shift integer ,how many letters to be shifted
+     * @return char value of the new character
+     */
     char shift(char letter, int shift) {
         //we can compare letter from ASCII Table as letters
         //we don't change the Special Letters
